@@ -14,6 +14,13 @@ class Testperceptron(ut.TestCase):
         self.assertEqual(1, pt.OR(1, 0))
         self.assertEqual(1, pt.OR(1, 1))
 
+    def test_nand(self):
+        self.assertEqual(1, pt.NAND(0, 0))
+        self.assertEqual(1, pt.NAND(0, 1))
+        self.assertEqual(1, pt.NAND(1, 0))
+        self.assertEqual(0, pt.NAND(1, 1))
+
+
 if __name__ == '__main__':
     ut.main()
 
