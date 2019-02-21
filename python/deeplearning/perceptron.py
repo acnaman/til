@@ -34,5 +34,8 @@ def NAND(x1, x2):
     else:
         return 0
 
-
+def XOR(x1, x2):
+    tmp1 = OR(x1, x2)
+    tmp2 = NAND(x1, x2)
+    return AND(tmp1, tmp2)
 

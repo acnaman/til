@@ -20,6 +20,11 @@ class Testperceptron(ut.TestCase):
         self.assertEqual(1, pt.NAND(1, 0))
         self.assertEqual(0, pt.NAND(1, 1))
 
+    def test_xor(self):
+        self.assertEqual(0, pt.XOR(0, 0))
+        self.assertEqual(1, pt.XOR(0, 1))
+        self.assertEqual(1, pt.XOR(1, 0))
+        self.assertEqual(0, pt.XOR(1, 1))
 
 if __name__ == '__main__':
     ut.main()
