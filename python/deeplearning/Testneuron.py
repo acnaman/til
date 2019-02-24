@@ -13,6 +13,11 @@ class Testneuron(ut.TestCase):
         self.assertArray(np.array([1,0,1]), neuron.step_function(np.array([1,0,1])))
         self.assertArray(np.array([0,0,1]), neuron.step_function(np.array([-1,0,1.4])))
 
+    def test_relu(self):
+        self.assertEqual(1, neuron.relu(1))
+        self.assertEqual(0, neuron.relu(0))
+        self.assertEqual(2.1, neuron.relu(2.1))
+        self.assertEqual(0, neuron.relu(-1))
 
 if __name__ == "__main__":
     ut.main()
