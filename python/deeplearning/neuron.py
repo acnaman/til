@@ -12,3 +12,9 @@ def sigmoid(x):
 def relu(x):
     return np.maximum(0,x)
 
+# 他の実装と合わせるため、恒等関数を定義
+def identity_function(x):
+    return x
+
+
+

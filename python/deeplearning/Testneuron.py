@@ -19,5 +19,11 @@ class Testneuron(ut.TestCase):
         self.assertEqual(2.1, neuron.relu(2.1))
         self.assertEqual(0, neuron.relu(-1))
 
+    def test_identity_function(self):
+        self.assertEqual(1, neuron.identity_function(1))
+        self.assertEqual(0, neuron.identity_function(0))
+        self.assertEqual(-0.1, neuron.identity_function(-0.1))
+        self.assertEqual([1,-1], neuron.identity_function([1,-1]))
+
 if __name__ == "__main__":
     ut.main()
