@@ -30,8 +30,9 @@ class Testneuron(ut.TestCase):
         self.assertTrue(res)
 
     def test_softmax(self):
+        # softmaxの計算結果を正確にテストに書くのは難しいので一旦0より大きければOKとする
         self.assertArray_all_upper([0,0,0], neuron.softmax([1,1,1]))
-
+        self.assertArray_all_upper([0,0,0], neuron.softmax([1010,1000,990]))
 
 if __name__ == "__main__":
     ut.main()

@@ -17,7 +17,9 @@ def identity_function(x):
     return x
 
 def softmax(a):
-    exp_a = np.exp(a)
+    c = np.max(a)
+
+    exp_a = np.exp(a - c) # オーバーフロー対策。（softmax関数は全ての要素から同じ値を足し引きしても結果が変わらない）
 
     sum_exp_a = np.sum(exp_a)
     y = exp_a / sum_exp_a
