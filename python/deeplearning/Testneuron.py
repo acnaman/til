@@ -25,5 +25,13 @@ class Testneuron(ut.TestCase):
         self.assertEqual(-0.1, neuron.identity_function(-0.1))
         self.assertEqual([1,-1], neuron.identity_function([1,-1]))
 
+    def assertArray_all_upper(self, first, second):
+        res = (np.array(first) < np.array(second)).all()            
+        self.assertTrue(res)
+
+    def test_softmax(self):
+        self.assertArray_all_upper([0,0,0], neuron.softmax([1,1,1]))
+
+
 if __name__ == "__main__":
     ut.main()
