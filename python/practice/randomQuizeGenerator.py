@@ -12,8 +12,8 @@ numOfChildren = 35
 
 for quiz_num in range(numOfChildren):
     # 問題集と回答集のファイルを作成する
-    quiz_file = open('capitalsquiz{}.txt'.format(quiz_num + 1), 'w') 
-    answer_key_file = open('capitalsquiz_answers{}.txt'.format(quiz_num + 1), 'w')
+    quiz_file = open('tmp/capitalsquiz{}.txt'.format(quiz_num + 1), 'w') 
+    answer_key_file = open('tmp/capitalsquiz_answers{}.txt'.format(quiz_num + 1), 'w')
 
     with quiz_file, answer_key_file:
         # 問題集のヘッダーを書く
@@ -34,7 +34,17 @@ for quiz_num in range(numOfChildren):
             del wrong_answers[wrong_answers.index(correct_answer)]
             wrong_answers = random.sample(wrong_answers, 3)
             answer_options = wrong_answers + [correct_answer]
-            random.shuffle([answer_options])
+            random.shuffle(answer_options)
 
+            # 問題文と回答選択肢を問題ファイルに書く
+            quiz_file.write('{}. {}の都道府県庁所在地は？\n'.format(question_num + 1, prefectures[question_num]))
 
+            for i in range(4):
+                quiz_file.write('{} {}\n'.format('ABCD'[i], answer_options[i]))
 
+            quiz_file.write('\n答え：________\n\n')
+
+            answer_key_file.write('{} {}\n'.format(question_num + 1, 'ABCD'[answer_options.index(correct_answer)]))
+                
+        quiz_file.close()
+        answer_key_file.close()
