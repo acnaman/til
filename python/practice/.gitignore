@@ -1,4 +1,5 @@
 *.dat
 *.dir
 *.bak
+*.db
 tmp/*
