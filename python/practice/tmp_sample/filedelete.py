@@ -8,10 +8,11 @@ ignore_pattern = '.py'
 for folßdername, subfolders, filenames in os.walk('.'):
     for filename in filenames:
         if filename.endswith(ignore_pattern) :
-            print("{}は除外しないファイル".format(filename))
+            print("{}は削除しないファイルです。".format(filename))
         
         else:
-            print ("{}は除外する！！！！！".format(filename))
+            send2trash.send2trash(filename)
+            print(filename + 'を削除しました。')
 
 
 
