@@ -32,6 +32,12 @@ def mean_squared_error(y, t):
 
 # 交差エントロピー誤差
 def cross_entropy_error(y,t):
+    if y.ndim == 1:
+        t = t.reshape(1, t.size)
+        y = y.reshape(1, y.size)
+
     delta = 1e-7
-    return -np.sum(t * np.log(y.delta))
+    batch_size = y.shape[0]
+    return -np.sum(t * np.log(y - delta) / batch_size)
+
 
