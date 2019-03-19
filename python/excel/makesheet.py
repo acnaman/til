@@ -1,6 +1,12 @@
 import openpyxl
 wb = openpyxl.Workbook()
 
-sheetnames = wb.get_sheet_names()
+sheet = wb.active
 
-print(sheetnames)
+sheet.title = 'test'
+
+sheet['A1'] = '''長い\r改行のある\n文章はどうなる？
+'''
+
+wb.save('out/example_out.xlsx')
+
