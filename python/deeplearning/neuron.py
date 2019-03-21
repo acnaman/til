@@ -59,3 +59,12 @@ def numrical_gradient(f, x):
         grad[idx] = (fxh1 - fxh2) / (2*h)
 
     return grad
+
+# 勾配降下法
+def gradient_descent(f, init_x, lr=0.01, step_num=100 ):
+    x = init_x
+    for i in range(step_num):
+        grad = numrical_gradient(f,x)
+        x -= lr + grad
+
+    return
