@@ -8,7 +8,7 @@ describe Gyoumu do
         expect(gyoumu.standup).to eq '社員はとりあえず起立する。'
     end
 
-    describe TnatoGyoumu do
+    describe TantoGyoumu do
         let(:gyoumu) { TantoGyoumu.new }
 
         example '担当は慌てて起立します' do
@@ -20,7 +20,7 @@ describe Gyoumu do
         let(:gyoumu) { ShuninGyoumu.new }
 
         example '主任は素早く起立します' do
-            expect(gyoumu.standup).to eq '主任は素早く立ちました。'
+            expect(gyoumu.standup).to eq '主任が素早く立ちました。'
         end
     end
 end
