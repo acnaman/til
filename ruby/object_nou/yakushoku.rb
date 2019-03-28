@@ -29,3 +29,4 @@ class Shunin < Yakushoku
         Tanto.new
     end
 end
+ 
