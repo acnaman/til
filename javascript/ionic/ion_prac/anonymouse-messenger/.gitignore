@@ -27,3 +27,4 @@ UserInterfaceState.xcuserstate
 
 # 個人設定
 src/helpers/firebaseConfig.ts
+src/providers/firebaseConfig.ts
