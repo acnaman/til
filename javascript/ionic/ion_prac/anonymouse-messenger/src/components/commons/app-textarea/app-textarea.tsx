@@ -1,4 +1,4 @@
-import { Component, Prop, State } from "@stencil/core";
+import { Component, Element, Prop, State, Event, EventEmitter } from "@stencil/core";
 
 @Component({
     tag: "app-textarea",
@@ -9,8 +9,15 @@ export class AppTextarea {
     @Prop() placeholder: string = "";
     @Prop() btText: string = "";
 
+    @Prop({ connect: "ion-loading-controller" })
+    loadingCtrl: HTMLIonLoadingControllerElement;
+
+    @Element() el: HTMLElement;
+
     @State() text: string = "";
     @State() validate: boolean = true;
+
+    @Event() sendBtClicked: EventEmitter;
 
     textInput(el) {
         this.text = el.srcElement.value;
@@ -19,6 +26,10 @@ export class AppTextarea {
         } else {
             this.validate = false;
         }
+    }
+
+    async send(){
+        this.sendBtClicked.emit(this.text);
     }
     
     render () {

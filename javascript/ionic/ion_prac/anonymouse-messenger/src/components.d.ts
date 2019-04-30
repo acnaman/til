@@ -22,6 +22,7 @@ export namespace Components {
   }
   interface AppTextareaAttributes extends StencilHTMLAttributes {
     'btText'?: string;
+    'onSendBtClicked'?: (event: CustomEvent) => void;
     'placeholder'?: string;
   }
 

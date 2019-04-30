@@ -1,5 +1,6 @@
-import { Component, State } from '@stencil/core';
+import { Component, State, Prop } from '@stencil/core';
 import { UserProvider } from '../../providers/user';
+import { MessageProvider } from '../../providers/message';
 
 @Component({
   tag: 'page-home',
@@ -9,6 +10,9 @@ export class Homepage {
   @State() loginUser: any = null;
   @State() fetched: boolean = false;
 
+  @Prop({ connect: "ion-loading-controller" })
+  loadingCtrl: HTMLIonLoadingControllerElement;
+
   componentWillLoad() {
     this.loggedIn();
   }
@@ -16,6 +20,20 @@ export class Homepage {
   async loggedIn() {
     this.loginUser = await UserProvider.loggedIn();
     this.fetched = true;
+  }
+
+  async send(ev) {
+    if (ev && ev.detail) {
+      const loadingElement = await this.loadingCtrl.create({
+        message: "送信中",
+        translucent: true,
+        duration: 20000
+      });
+      await loadingElement.present();
+      const message = { message: ev.detail };
+      await MessageProvider.create(this.loginUser.uid, message);
+      await loadingElement.dismiss();
+    }
   }
 
   render() {
@@ -42,6 +60,7 @@ export class Homepage {
                 <app-textarea
                   placeholder="気になることを聞いてみよう"
                   btText="送信する"
+                  onSendBtClicked={ev => this.send(ev)}
                 />
               </div>
             );
