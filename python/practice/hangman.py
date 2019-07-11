@@ -5,8 +5,8 @@ def hangman (word) :
                 "              ",
                 "       |      ",
                 "       O      ",
-                "      /|\     ",
-                "      / \     ",
+                "      /|\\     ",
+                "      / \\     ",
                 "              "
             ]
     rletters = list(word)
