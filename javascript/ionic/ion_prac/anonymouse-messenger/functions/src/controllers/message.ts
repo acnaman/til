@@ -1,8 +1,8 @@
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from "constants";
-import { resolveSoa } from "dns";
+import { StorageLib } from "../lib/storage";
+import { CanvasLib } from "../lib/canvas";
 
 export class MessageController{
-    public static async create(req: any, res: any, db: any, admin: any) {
+    public static async create(req: any, res: any, db: any, admin: any, storage: any) {
         if (req.method !== "POST") {
             res.status(405).end();
             return 0;
@@ -36,12 +36,20 @@ export class MessageController{
                     console.error("Error adding document: ", error);
                     return 0;
                 });
-            } catch (e) {
-                console.error(e);
-            }
-            res.send({ id: key });
-            return key;
+        } catch (e) {
+            console.error(e); 
         }
-        return;
+
+        const canvasLib = new CanvasLib();
+        const blob = await canvasLib.create(message.message);
+        const storageLib = new StorageLib();
+        await storageLib.upload(
+            storage,
+            blob,
+            key + ".jpg",
+            "users/" + uid + "/" + key
+        );
+        res.send({ id: key });
+        return key;
     } 
 }
