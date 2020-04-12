@@ -5,7 +5,7 @@ import (
 	"math"
 )
 
-func main () {
+func main() {
 
 	const (
 		X = 34
@@ -26,8 +26,8 @@ func main () {
 	fmt.Printf("value = %v\n", 1.0000000000000007)
 	fmt.Printf("value = %v\n", 1.0000000000000008)
 
-	a1 := [3]int{1,2,3}
-	a2 := [3]int{4,5,6}
+	a1 := [3]int{1, 2, 3}
+	a2 := [3]int{4, 5, 6}
 	fmt.Printf("a1代入前 %v\n", a1)
 	a1 = a2
 	fmt.Printf("a1代入後 %v\n", a1)
@@ -51,7 +51,7 @@ func main () {
 	}
 }
 
-func div (a, b int) (int, int) {
+func div(a, b int) (int, int) {
 	q := a / b
 	r := a % b
 	return q, r
@@ -65,7 +65,7 @@ func returnFunc() func() {
 
 func later() func(string) string {
 	var store string
-	
+
 	return func(next string) string {
 		s := store
 		store = next
