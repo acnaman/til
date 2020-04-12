@@ -6,6 +6,12 @@ import (
 )
 
 func main () {
+
+	const (
+		X = 34
+		Y = "test"
+	)
+
 	print("Hello World")
 
 	fmt.Printf("uint32 max value = %d\n", math.MaxUint32)
@@ -28,10 +34,45 @@ func main () {
 
 	q, r := div(43, 5)
 	fmt.Printf("商：%d / 剰余：%d\n", q, r)
+
+	f := returnFunc()
+	f()
+
+	f2 := later()
+	fmt.Println(f2("Golang"))
+	fmt.Println(f2("is"))
+	fmt.Println(f2("awesome!"))
+	fmt.Printf("X:%v, Y:%v\n", X, Y)
+
+	if _, err := testFunc(); err != nil {
+		fmt.Println("error occured!")
+	} else {
+		fmt.Println("testfunc doesn't return error!")
+	}
 }
 
 func div (a, b int) (int, int) {
 	q := a / b
 	r := a % b
 	return q, r
+}
+
+func returnFunc() func() {
+	return func() {
+		fmt.Println("retrunfunc test")
+	}
+}
+
+func later() func(string) string {
+	var store string
+	
+	return func(next string) string {
+		s := store
+		store = next
+		return s
+	}
+}
+
+func testFunc() (string, error) {
+	return "test", nil
 }
