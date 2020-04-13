@@ -6,7 +6,39 @@ import (
 )
 
 func main() {
+	func2()
+	func3(2)
+	func3('f')
+	func3("f")
+}
 
+func div(a, b int) (int, int) {
+	q := a / b
+	r := a % b
+	return q, r
+}
+
+func returnFunc() func() {
+	return func() {
+		fmt.Println("retrunfunc test")
+	}
+}
+
+func later() func(string) string {
+	var store string
+
+	return func(next string) string {
+		s := store
+		store = next
+		return s
+	}
+}
+
+func testFunc() (string, error) {
+	return "test", nil
+}
+
+func func1() {
 	const (
 		X = 34
 		Y = "test"
@@ -51,28 +83,27 @@ func main() {
 	}
 }
 
-func div(a, b int) (int, int) {
-	q := a / b
-	r := a % b
-	return q, r
-}
+func func2() {
+	fruits := [3]string {"Apple", "Banana", "Cherry"}
 
-func returnFunc() func() {
-	return func() {
-		fmt.Println("retrunfunc test")
+	for i, s := range fruits {
+		fmt.Printf("fruits[%d]=%s\n", i, s)
 	}
 }
 
-func later() func(string) string {
-	var store string
+func func3(x interface{}) {
+	i, isint := x.(int)
+	f, isfloat := x.(float64)
+	fmt.Println(i, isint, f, isfloat)
 
-	return func(next string) string {
-		s := store
-		store = next
-		return s
+	switch x.(type) {
+	case bool:
+		fmt.Println("bool")
+	case int, uint:
+		fmt.Println("integer")
+	case string:
+		fmt.Println("string")
+	default:
+		fmt.Println("others")
 	}
-}
-
-func testFunc() (string, error) {
-	return "test", nil
 }
