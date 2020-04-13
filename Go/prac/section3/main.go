@@ -3,13 +3,17 @@ package main
 import (
 	"fmt"
 	"math"
+	"runtime"
 )
 
+var testNumber int
+
+func init() {
+	testNumber = 45
+}
+
 func main() {
-	func2()
-	func3(2)
-	func3('f')
-	func3("f")
+	fmt.Println(testNumber)
 }
 
 func div(a, b int) (int, int) {
@@ -106,4 +110,25 @@ func func3(x interface{}) {
 	default:
 		fmt.Println("others")
 	}
+}
+
+func sub() {
+	for i := 0; i < 10000; i++ {
+		fmt.Println("sub loop")
+	}
+}
+
+func goroutineSample() {
+	go sub()
+	for i := 0; i < 10000; i++ {
+		fmt.Println("main loop")
+	}
+}
+
+func runtimeCheck() {
+	go fmt.Println("hoge")
+
+	fmt.Printf("NumCPU: %d\n", runtime.NumCPU())
+	fmt.Printf("NumGoroutine: %d\n", runtime.NumGoroutine())
+	fmt.Printf("Version: %s\n", runtime.Version())
 }
