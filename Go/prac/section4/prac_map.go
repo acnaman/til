@@ -2,10 +2,6 @@ package main
 
 import "fmt"
 
-func main() {
-	mfunc1()
-}
-
 func mfunc1() {
 	m := make(map[int]string)
 	m[1] = "US"
