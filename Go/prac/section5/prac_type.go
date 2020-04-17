@@ -1,11 +1,13 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"reflect"
 )
 
 func main() {
-	func5()
+	func10()
 }
 
 type (
@@ -131,4 +133,90 @@ func func5() {
 	f := (*Point).ToString
 	str := f(NewPoint(32, 56))
 	fmt.Println(str)
+}
+
+func func6() {
+	ps := make([]Point, 5)
+	for _, p := range ps {
+		fmt.Println(p.X, p.Y)
+	}
+}
+
+type Points []*Point
+
+func (ps Points) ToString() string {
+	str := ""
+	for _, p := range ps {
+		if str != "" {
+			str += ","
+		}
+		if p == nil {
+			str += "<nil>"
+		} else {
+			str += fmt.Sprintf("[%d,%d]", p.X, p.Y)
+		}
+	}
+	return str
+}
+
+func func7() {
+	ps := Points{}
+	ps = append(ps, &Point{X: 1, Y: 2})
+	ps = append(ps, nil)
+	ps = append(ps, &Point{X: 3, Y: 4})
+
+	fmt.Println(ps.ToString())
+}
+
+type User struct {
+	Id   int    `json:"user_id"`
+	Name string `json:"user_name"`
+	Age  uint   `json:"user_age"`
+}
+
+func func8() {
+	m1 := map[User]string{
+		{Id: 1, Name: "Taro"}: "Tokyo",
+		{Id: 2, Name: "Jiro"}: "Osaka",
+	}
+
+	m2 := map[int]User{
+		1: {Id: 1, Name: "Taro"},
+		2: {Id: 2, Name: "Jiro"},
+	}
+
+	fmt.Println(m1)
+	fmt.Println(m2)
+}
+
+func func9() {
+	u := User{Id: 1, Name: "Taro", Age: 32}
+
+	t := reflect.TypeOf(u)
+
+	for i := 0; i < t.NumField(); i++ {
+		f := t.Field(i)
+		fmt.Println(f.Name, f.Tag)
+	}
+}
+
+type User1 struct {
+	Id   int    `json:"user_id"`
+	Name string `json:"user_name"`
+	Age  uint   `json:"user_age"`
+}
+
+type User2 struct {
+	Id   int
+	Name string
+	Age  uint
+}
+
+func func10() {
+	u1 := User1{Id: 1, Name: "Taro", Age: 32}
+	u2 := User2{Id: 1, Name: "Taro", Age: 32}
+	bs1, _ := json.Marshal(u1)
+	bs2, _ := json.Marshal(u2)
+	fmt.Println(string(bs1))
+	fmt.Println(string(bs2))
 }
