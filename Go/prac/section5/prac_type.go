@@ -6,10 +6,6 @@ import (
 	"reflect"
 )
 
-func main() {
-	func10()
-}
-
 type (
 	MyInt       int
 	IntPair     [2]int
