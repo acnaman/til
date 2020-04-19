@@ -5,10 +5,41 @@ import (
 	"log"
 	"os"
 	path "path/filepath"
+	"strings"
 )
 
 func main() {
-	
+	processinfofunc()
+}
+
+func processinfofunc() {
+	fmt.Println(
+		os.Getpid(),
+		os.Getppid(),
+		os.Getuid(),
+		os.Geteuid(),
+		os.Getgid(),
+		os.Getegid(),
+	)
+}
+
+func lookupenvfunc() {
+	if home, ok := os.LookupEnv("HOME"); ok {
+		fmt.Println(home)
+	} else {
+		fmt.Println("no $HOME")
+	}
+}
+
+func getEnvMap() map[string]string {
+	envs := os.Environ()
+	envmap := make(map[string]string, 50)
+
+	for _, v := range envs {
+		kv := strings.Split(v, "=")
+		envmap[kv[0]] = kv[1]
+	}
+	return envmap
 }
 
 // call readdirfunc(0, ".")
@@ -25,11 +56,11 @@ func readdirfunc(indentNum int, dirPath string) {
 	for i := 0; i < indentNum; i++ {
 		indent += "  "
 	}
-	
+
 	for _, fi := range fis {
 		if fi.IsDir() {
 			fmt.Println(indent + "[" + fi.Name() + "]")
-			readdirfunc(indentNum + 1, path.Join(dirPath, fi.Name()))
+			readdirfunc(indentNum+1, path.Join(dirPath, fi.Name()))
 		} else {
 			fmt.Println(indent + fi.Name())
 		}
@@ -54,15 +85,15 @@ func filecreatefunc() {
 
 func filefunc() {
 	var (
-		bs []byte
-		n int
-		err error
+		bs     []byte
+		n      int
+		err    error
 		offset int64
-		fi os.FileInfo
+		fi     os.FileInfo
 	)
-	
+
 	f, err := os.Open("test.txt")
-	if err != nil  {
+	if err != nil {
 		log.Fatal(err)
 	}
 	defer f.Close()
@@ -82,7 +113,7 @@ func filefunc() {
 	fmt.Println(offset)
 	offset, err = f.Seek(0, os.SEEK_END)
 	fmt.Println(offset)
-	
+
 	fi, err = f.Stat()
 	name := fi.Name()
 	size := fi.Size()
@@ -94,7 +125,7 @@ func filefunc() {
 
 func openfunc() {
 	f, err := os.Open("test.txt")
-	if err != nil  {
+	if err != nil {
 		log.Fatal(err)
 	}
 	defer f.Close()
