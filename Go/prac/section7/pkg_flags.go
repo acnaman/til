@@ -5,10 +5,6 @@ import (
 	"fmt"
 )
 
-func main() {
-	getflagsfunc()
-}
-
 func getflagsfunc() {
 	var (
 		max int
