@@ -7,9 +7,6 @@ import (
 	"time"
 )
 
-func main() {
-	randsourcefunc()
-}
 func randsourcefunc() {
 	src := rand.NewSource(time.Now().UnixNano())
 	rnd := rand.New(src)
