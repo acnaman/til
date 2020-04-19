@@ -5,10 +5,6 @@ import (
 	"time"
 )
 
-func main() {
-	tickfunc()
-}
-
 func tickfunc() {
 	ch := time.Tick(3 * time.Second)
 
