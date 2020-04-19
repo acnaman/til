@@ -8,10 +8,6 @@ import (
 	"strings"
 )
 
-func main() {
-	processinfofunc()
-}
-
 func processinfofunc() {
 	fmt.Println(
 		os.Getpid(),
