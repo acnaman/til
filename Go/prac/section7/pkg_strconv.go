@@ -5,10 +5,6 @@ import (
 	"strconv"
 )
 
-func main() {
-	parseintfunc()
-}
-
 func parseintfunc() {
 	fmt.Println(strconv.ParseInt("123", 10, 0))
 	fmt.Println(strconv.ParseInt("-1234", 10, 0))
