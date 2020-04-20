@@ -6,7 +6,25 @@ import (
 )
 
 func main() {
-	replacefunc()
+	trinfields()
+}
+
+func trinfields() {
+	fmt.Println(strings.Fields("a b c"))
+	fmt.Println(strings.Fields("A\tB　C\tD"))
+}
+
+func trimfunc() {
+	fmt.Println(strings.TrimSpace("   A,B C D,E   "))
+	fmt.Println(strings.TrimSpace("\tGolang\r\n"))
+	fmt.Println(strings.TrimSpace("　ぜんかくす　ぺーす　"))
+}
+
+func splitfunc() {
+	fmt.Println(strings.Split("A,B,C,D,E", ","))
+	fmt.Println(strings.Split("A,B,C,D,E,", ","))
+	fmt.Println(strings.SplitAfter("A,B,C,D,E,", ","))
+	fmt.Println(strings.SplitN("A,B,C,D,E", ",", 3))
 }
 
 func replacefunc() {
