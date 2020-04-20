@@ -5,7 +5,10 @@ import (
 	"os"
 )
 
-func main() {
+// func main() {
+// logmain()
+// }
+func logmain() {
 	f, err := os.Create("test.log")
 	if err != nil {
 		return
