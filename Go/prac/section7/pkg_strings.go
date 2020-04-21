@@ -5,11 +5,7 @@ import (
 	"strings"
 )
 
-func main() {
-	trinfields()
-}
-
-func trinfields() {
+func fieldsfunc() {
 	fmt.Println(strings.Fields("a b c"))
 	fmt.Println(strings.Fields("A\tB　C\tD"))
 }
