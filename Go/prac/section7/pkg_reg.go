@@ -5,10 +5,6 @@ import (
 	"regexp"
 )
 
-func main() {
-	submatchfunc()
-}
-
 func submatchfunc() {
 	re := regexp.MustCompile(`(\d+)-(\d+)-(\d+)`)
 	s := `
