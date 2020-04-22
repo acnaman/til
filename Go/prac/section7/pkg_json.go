@@ -7,10 +7,6 @@ import (
 	"time"
 )
 
-func main() {
-	unmarshalfunc()
-}
-
 type User struct {
 	Id      int
 	Name    string
