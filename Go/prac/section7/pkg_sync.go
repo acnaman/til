@@ -6,10 +6,6 @@ import (
 	"time"
 )
 
-func main() {
-	waitgroupfunc()
-}
-
 func waitgroupfunc() {
 	wg := new(sync.WaitGroup)
 	wg.Add(3)
