@@ -9,10 +9,6 @@ import (
 	"net/url"
 )
 
-func main() {
-	infohandlefunccall()
-}
-
 func infohandlerfunc(w http.ResponseWriter, req *http.Request) {
 	io.WriteString(w, `
 <!DOCTYPE html>
