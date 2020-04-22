@@ -9,10 +9,6 @@ import (
 	"strings"
 )
 
-func main() {
-	tempfilefunc()
-}
-
 func tempfilefunc() {
 	f, err := ioutil.TempFile(os.TempDir(), "foo")
 	if err != nil {
