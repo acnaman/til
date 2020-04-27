@@ -1,6 +1,6 @@
 {
-    "name": "django-vue-Env",
-    "image": "django-vue-env",
+    "name": "django-vue-server-Env",
+    "image": "django-vue-server-env",
     "dockerFile": "Dockerfile",
     "context": "..",
     "appPort": [
