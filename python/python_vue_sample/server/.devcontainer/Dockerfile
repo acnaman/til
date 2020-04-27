@@ -5,5 +5,5 @@ RUN apt update && apt upgrade -y --no-install-recommends
 # install git
 RUN apt install -y git python-pip python3-pip pipenv
 # python package install
-RUN pip install django
+RUN pip install django django-cors-headers django-filter djangorestframework djangorestframework-jwt PyJWT pytz sqlparse
 
