@@ -1,0 +1,14 @@
+{
+    "name": "django-vue-client-Env",
+    "image": "django-vue-client-env",
+    "dockerFile": "Dockerfile",
+    "context": "..",
+    "appPort": [
+        "8000",
+    ],
+    "extensions": [
+        "ms-vscode.vscode-typescript-tslint-plugin",
+    ],
+    "shutdownAction": "stopContainer",
+    "postCreateCommand": "yarn install"
+}
