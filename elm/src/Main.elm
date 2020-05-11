@@ -1,7 +1,14 @@
-module Main exposing (add, output)
+module Main exposing(..)
 
-output = 
-    "1 + 1 = " ++ String.fromInt( add 1 1)
+type LUser = LoggedIn Bool String | Guest
 
-add a b = 
-    a + b
+lmessage : LUser -> String
+lmessage user = case user of
+  LoggedIn isAdmin name ->
+    if isAdmin then
+      "Hello, " ++ name ++ "(Administrator)."
+    else
+      "Hello, " ++ name ++ "."
+  Guest -> 
+    "Please Login."
+
