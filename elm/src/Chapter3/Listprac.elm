@@ -50,7 +50,7 @@ view model
     [ Html.form [ onSubmit Submit ]
       [ input [ value model.input, type_ "text", onInput Input ] []
       , button
-          [ disabled (String.length model.input < 1) ]
+          [ disabled (String.length model.input <? 1) ]
           [ text "Submit"]
       , ul [] (List.map viewMemo model.memos)
       ]
@@ -59,4 +59,19 @@ view model
 viewMemo : String -> Html Msg
 viewMemo memo = 
   li [] [text memo]
+
+
+type FooBar
+  = Foo Int String
+  | Bar Bool
+
+foobar : Decoder FooBar
+foobar =
+  field "type" string
+    |> andThen foobarHelp
+
+foobarHelp: String -> Decoder FooBar
+foobarHelp type_ =
+  case type_ of
+    "foo"
 
