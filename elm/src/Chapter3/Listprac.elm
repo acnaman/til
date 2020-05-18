@@ -1,77 +1,76 @@
-module Chapter3.Listprac exposing(main)
+module Chapter3.Listprac exposing (main)
 
 import Browser
-import Html exposing(..)
-import Html.Attributes exposing (disabled, value, type_)
+import Html exposing (..)
+import Html.Attributes exposing (disabled, type_, value)
 import Html.Events exposing (onInput, onSubmit)
 
+
 main : Program () Model Msg
-main = 
-  Browser.sandbox
-    { init = init
-    , update = update
-    , view = view
-    }
+main =
+    Browser.sandbox
+        { init = init
+        , update = update
+        , view = view
+        }
+
+
 
 -- MODEL
 
+
 type alias Model =
-  { input : String
-  , memos : List String
-  }
+    { input : String
+    , memos : List String
+    }
+
 
 init : Model
 init =
-  { input = ""
-  , memos = []
-  }
+    { input = ""
+    , memos = []
+    }
+
 
 
 -- UPDATE
+
+
 type Msg
-  = Input String
-  | Submit  
+    = Input String
+    | Submit
+
 
 update : Msg -> Model -> Model
-update msg model
-  = case msg of
-    Input input -> 
-      { model | input = input }
-    Submit ->
-      { model
-        | input = ""
-        , memos = model.input :: model.memos
-      }
+update msg model =
+    case msg of
+        Input input ->
+            { model | input = input }
+
+        Submit ->
+            { model
+                | input = ""
+                , memos = model.input :: model.memos
+            }
+
+
 
 -- VIEW
+
+
 view : Model -> Html Msg
-view model
-  = div []
-    [ Html.form [ onSubmit Submit ]
-      [ input [ value model.input, type_ "text", onInput Input ] []
-      , button
-          [ disabled (String.length model.input <? 1) ]
-          [ text "Submit"]
-      , ul [] (List.map viewMemo model.memos)
-      ]
-    ]
+view model =
+    div []
+        [ Html.form [ onSubmit Submit ]
+            [ input [ value model.input, type_ "text", onInput Input ] []
+            , button
+                [ disabled (String.length model.input <? 1) ]
+                [ text "Submit" ]
+            , ul [] (List.map viewMemo model.memos)
+            ]
+        ]
+
 
 viewMemo : String -> Html Msg
-viewMemo memo = 
-  li [] [text memo]
-
-
-type FooBar
-  = Foo Int String
-  | Bar Bool
-
-foobar : Decoder FooBar
-foobar =
-  field "type" string
-    |> andThen foobarHelp
-
-foobarHelp: String -> Decoder FooBar
-foobarHelp type_ =
-  case type_ of
-    "foo"
-
+viewMemo memo =
+    li [] [ text memo ]

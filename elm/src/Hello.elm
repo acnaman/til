@@ -3,5 +3,6 @@ module Hello exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 
-main = 
+
+main =
     a [ href "https://elm-lang.org" ] [ text "Elm" ]
