@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Chapter3.Command</title>
+  <title>Chapter3.Search</title>
   <style>body { padding: 0; margin: 0; }</style>
 </head>
 
@@ -5333,18 +5333,31 @@ var $elm$core$Task$perform = F2(
 				A2($elm$core$Task$map, toMessage, task)));
 	});
 var $elm$browser$Browser$element = _Browser_element;
+var $author$project$Chapter3$Search$Init = {$: 'Init'};
+var $author$project$Chapter3$Search$Model = F2(
+	function (input, userState) {
+		return {input: input, userState: userState};
+	});
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $author$project$Chapter3$Command$init = function (_v0) {
+var $author$project$Chapter3$Search$init = function (_v0) {
 	return _Utils_Tuple2(
-		{result: ''},
+		A2($author$project$Chapter3$Search$Model, '', $author$project$Chapter3$Search$Init),
 		$elm$core$Platform$Cmd$none);
 };
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
-var $author$project$Chapter3$Command$GotRepo = function (a) {
-	return {$: 'GotRepo', a: a};
+var $author$project$Chapter3$Search$Failed = function (a) {
+	return {$: 'Failed', a: a};
 };
+var $author$project$Chapter3$Search$Loaded = function (a) {
+	return {$: 'Loaded', a: a};
+};
+var $author$project$Chapter3$Search$Receive = function (a) {
+	return {$: 'Receive', a: a};
+};
+var $author$project$Chapter3$Search$Waiting = {$: 'Waiting'};
+var $elm$json$Json$Decode$decodeString = _Json_runOnString;
 var $elm$http$Http$BadStatus_ = F2(
 	function (a, b) {
 		return {$: 'BadStatus_', a: a, b: b};
@@ -5900,17 +5913,6 @@ var $elm$http$Http$expectStringResponse = F2(
 			$elm$core$Basics$identity,
 			A2($elm$core$Basics$composeR, toResult, toMsg));
 	});
-var $elm$http$Http$BadBody = function (a) {
-	return {$: 'BadBody', a: a};
-};
-var $elm$http$Http$BadStatus = function (a) {
-	return {$: 'BadStatus', a: a};
-};
-var $elm$http$Http$BadUrl = function (a) {
-	return {$: 'BadUrl', a: a};
-};
-var $elm$http$Http$NetworkError = {$: 'NetworkError'};
-var $elm$http$Http$Timeout = {$: 'Timeout'};
 var $elm$core$Result$mapError = F2(
 	function (f, result) {
 		if (result.$ === 'Ok') {
@@ -5922,6 +5924,17 @@ var $elm$core$Result$mapError = F2(
 				f(e));
 		}
 	});
+var $elm$http$Http$BadBody = function (a) {
+	return {$: 'BadBody', a: a};
+};
+var $elm$http$Http$BadStatus = function (a) {
+	return {$: 'BadStatus', a: a};
+};
+var $elm$http$Http$BadUrl = function (a) {
+	return {$: 'BadUrl', a: a};
+};
+var $elm$http$Http$NetworkError = {$: 'NetworkError'};
+var $elm$http$Http$Timeout = {$: 'Timeout'};
 var $elm$http$Http$resolve = F2(
 	function (toResult, response) {
 		switch (response.$) {
@@ -5945,12 +5958,19 @@ var $elm$http$Http$resolve = F2(
 					toResult(body));
 		}
 	});
-var $elm$http$Http$expectString = function (toMsg) {
-	return A2(
-		$elm$http$Http$expectStringResponse,
-		toMsg,
-		$elm$http$Http$resolve($elm$core$Result$Ok));
-};
+var $elm$http$Http$expectJson = F2(
+	function (toMsg, decoder) {
+		return A2(
+			$elm$http$Http$expectStringResponse,
+			toMsg,
+			$elm$http$Http$resolve(
+				function (string) {
+					return A2(
+						$elm$core$Result$mapError,
+						$elm$json$Json$Decode$errorToString,
+						A2($elm$json$Json$Decode$decodeString, decoder, string));
+				}));
+	});
 var $elm$http$Http$emptyBody = _Http_emptyBody;
 var $elm$http$Http$Request = function (a) {
 	return {$: 'Request', a: a};
@@ -6124,98 +6144,302 @@ var $elm$http$Http$get = function (r) {
 	return $elm$http$Http$request(
 		{body: $elm$http$Http$emptyBody, expect: r.expect, headers: _List_Nil, method: 'GET', timeout: $elm$core$Maybe$Nothing, tracker: $elm$core$Maybe$Nothing, url: r.url});
 };
-var $elm$core$Debug$toString = _Debug_toString;
-var $author$project$Chapter3$Command$update = F2(
+var $author$project$Chapter3$Search$User = F5(
+	function (login, avatarUrl, name, htmlUrl, bio) {
+		return {avatarUrl: avatarUrl, bio: bio, htmlUrl: htmlUrl, login: login, name: name};
+	});
+var $elm$json$Json$Decode$field = _Json_decodeField;
+var $elm$json$Json$Decode$map5 = _Json_map5;
+var $elm$json$Json$Decode$oneOf = _Json_oneOf;
+var $elm$json$Json$Decode$maybe = function (decoder) {
+	return $elm$json$Json$Decode$oneOf(
+		_List_fromArray(
+			[
+				A2($elm$json$Json$Decode$map, $elm$core$Maybe$Just, decoder),
+				$elm$json$Json$Decode$succeed($elm$core$Maybe$Nothing)
+			]));
+};
+var $elm$json$Json$Decode$string = _Json_decodeString;
+var $author$project$Chapter3$Search$userDecoder = A6(
+	$elm$json$Json$Decode$map5,
+	$author$project$Chapter3$Search$User,
+	A2($elm$json$Json$Decode$field, 'login', $elm$json$Json$Decode$string),
+	A2($elm$json$Json$Decode$field, 'avatar_url', $elm$json$Json$Decode$string),
+	$elm$json$Json$Decode$maybe(
+		A2($elm$json$Json$Decode$field, 'name', $elm$json$Json$Decode$string)),
+	A2($elm$json$Json$Decode$field, 'html_url', $elm$json$Json$Decode$string),
+	$elm$json$Json$Decode$maybe(
+		A2($elm$json$Json$Decode$field, 'bio', $elm$json$Json$Decode$string)));
+var $author$project$Chapter3$Search$update = F2(
 	function (msg, model) {
-		if (msg.$ === 'Click') {
-			return _Utils_Tuple2(
-				model,
-				$elm$http$Http$get(
-					{
-						expect: $elm$http$Http$expectString($author$project$Chapter3$Command$GotRepo),
-						url: 'https://api.github.com/repos/elm/core'
-					}));
-		} else {
-			if (msg.a.$ === 'Ok') {
-				var repo = msg.a.a;
+		switch (msg.$) {
+			case 'Input':
+				var newInput = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{result: repo}),
+						{input: newInput}),
 					$elm$core$Platform$Cmd$none);
-			} else {
-				var error = msg.a.a;
+			case 'Send':
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
+						{input: '', userState: $author$project$Chapter3$Search$Waiting}),
+					$elm$http$Http$get(
 						{
-							result: $elm$core$Debug$toString(error)
-						}),
-					$elm$core$Platform$Cmd$none);
-			}
+							expect: A2($elm$http$Http$expectJson, $author$project$Chapter3$Search$Receive, $author$project$Chapter3$Search$userDecoder),
+							url: 'https://api.github.com/users/' + model.input
+						}));
+			default:
+				if (msg.a.$ === 'Ok') {
+					var user = msg.a.a;
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								userState: $author$project$Chapter3$Search$Loaded(user)
+							}),
+						$elm$core$Platform$Cmd$none);
+				} else {
+					var e = msg.a.a;
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								userState: $author$project$Chapter3$Search$Failed(e)
+							}),
+						$elm$core$Platform$Cmd$none);
+				}
 		}
 	});
-var $author$project$Chapter3$Command$Click = {$: 'Click'};
+var $author$project$Chapter3$Search$Input = function (a) {
+	return {$: 'Input', a: a};
+};
+var $author$project$Chapter3$Search$Send = {$: 'Send'};
+var $elm$html$Html$a = _VirtualDom_node('a');
+var $elm$json$Json$Encode$bool = _Json_wrap;
+var $elm$html$Html$Attributes$boolProperty = F2(
+	function (key, bool) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			$elm$json$Json$Encode$bool(bool));
+	});
+var $elm$html$Html$Attributes$autofocus = $elm$html$Html$Attributes$boolProperty('autofocus');
 var $elm$html$Html$button = _VirtualDom_node('button');
+var $elm$html$Html$Attributes$disabled = $elm$html$Html$Attributes$boolProperty('disabled');
 var $elm$html$Html$div = _VirtualDom_node('div');
-var $elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 'Normal', a: a};
+var $elm$html$Html$form = _VirtualDom_node('form');
+var $elm$json$Json$Encode$string = _Json_wrap;
+var $elm$html$Html$Attributes$stringProperty = F2(
+	function (key, string) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			$elm$json$Json$Encode$string(string));
+	});
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
+var $elm$html$Html$img = _VirtualDom_node('img');
+var $elm$html$Html$input = _VirtualDom_node('input');
+var $elm$html$Html$Events$alwaysStop = function (x) {
+	return _Utils_Tuple2(x, true);
+};
+var $elm$virtual_dom$VirtualDom$MayStopPropagation = function (a) {
+	return {$: 'MayStopPropagation', a: a};
 };
 var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
-var $elm$html$Html$Events$on = F2(
+var $elm$html$Html$Events$stopPropagationOn = F2(
 	function (event, decoder) {
 		return A2(
 			$elm$virtual_dom$VirtualDom$on,
 			event,
-			$elm$virtual_dom$VirtualDom$Normal(decoder));
+			$elm$virtual_dom$VirtualDom$MayStopPropagation(decoder));
 	});
-var $elm$html$Html$Events$onClick = function (msg) {
+var $elm$json$Json$Decode$at = F2(
+	function (fields, decoder) {
+		return A3($elm$core$List$foldr, $elm$json$Json$Decode$field, decoder, fields);
+	});
+var $elm$html$Html$Events$targetValue = A2(
+	$elm$json$Json$Decode$at,
+	_List_fromArray(
+		['target', 'value']),
+	$elm$json$Json$Decode$string);
+var $elm$html$Html$Events$onInput = function (tagger) {
 	return A2(
-		$elm$html$Html$Events$on,
-		'click',
-		$elm$json$Json$Decode$succeed(msg));
+		$elm$html$Html$Events$stopPropagationOn,
+		'input',
+		A2(
+			$elm$json$Json$Decode$map,
+			$elm$html$Html$Events$alwaysStop,
+			A2($elm$json$Json$Decode$map, tagger, $elm$html$Html$Events$targetValue)));
 };
-var $elm$html$Html$p = _VirtualDom_node('p');
+var $elm$html$Html$Events$alwaysPreventDefault = function (msg) {
+	return _Utils_Tuple2(msg, true);
+};
+var $elm$virtual_dom$VirtualDom$MayPreventDefault = function (a) {
+	return {$: 'MayPreventDefault', a: a};
+};
+var $elm$html$Html$Events$preventDefaultOn = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$MayPreventDefault(decoder));
+	});
+var $elm$html$Html$Events$onSubmit = function (msg) {
+	return A2(
+		$elm$html$Html$Events$preventDefaultOn,
+		'submit',
+		A2(
+			$elm$json$Json$Decode$map,
+			$elm$html$Html$Events$alwaysPreventDefault,
+			$elm$json$Json$Decode$succeed(msg)));
+};
+var $elm$html$Html$Attributes$placeholder = $elm$html$Html$Attributes$stringProperty('placeholder');
+var $elm$html$Html$Attributes$src = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'src',
+		_VirtualDom_noJavaScriptOrHtmlUri(url));
+};
+var $elm$html$Html$Attributes$target = $elm$html$Html$Attributes$stringProperty('target');
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $author$project$Chapter3$Command$view = function (model) {
+var $elm$core$Debug$toString = _Debug_toString;
+var $elm$core$String$trim = _String_trim;
+var $elm$html$Html$Attributes$value = $elm$html$Html$Attributes$stringProperty('value');
+var $elm$html$Html$Attributes$width = function (n) {
+	return A2(
+		_VirtualDom_attribute,
+		'width',
+		$elm$core$String$fromInt(n));
+};
+var $author$project$Chapter3$Search$view = function (model) {
 	return A2(
 		$elm$html$Html$div,
 		_List_Nil,
 		_List_fromArray(
 			[
 				A2(
-				$elm$html$Html$button,
+				$elm$html$Html$form,
 				_List_fromArray(
 					[
-						$elm$html$Html$Events$onClick($author$project$Chapter3$Command$Click)
+						$elm$html$Html$Events$onSubmit($author$project$Chapter3$Search$Send)
 					]),
 				_List_fromArray(
 					[
-						$elm$html$Html$text('Get Repository Info')
+						A2(
+						$elm$html$Html$input,
+						_List_fromArray(
+							[
+								$elm$html$Html$Events$onInput($author$project$Chapter3$Search$Input),
+								$elm$html$Html$Attributes$autofocus(true),
+								$elm$html$Html$Attributes$placeholder('GitHub name'),
+								$elm$html$Html$Attributes$value(model.input)
+							]),
+						_List_Nil),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$disabled(
+								_Utils_eq(model.userState, $author$project$Chapter3$Search$Waiting) || $elm$core$String$isEmpty(
+									$elm$core$String$trim(model.input)))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Submit')
+							]))
 					])),
-				A2(
-				$elm$html$Html$p,
-				_List_Nil,
-				_List_fromArray(
-					[
-						$elm$html$Html$text(model.result)
-					]))
+				function () {
+				var _v0 = model.userState;
+				switch (_v0.$) {
+					case 'Init':
+						return $elm$html$Html$text('');
+					case 'Waiting':
+						return $elm$html$Html$text('Waiting...');
+					case 'Loaded':
+						var user = _v0.a;
+						return A2(
+							$elm$html$Html$a,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$href(user.htmlUrl),
+									$elm$html$Html$Attributes$target('_blank')
+								]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$img,
+									_List_fromArray(
+										[
+											$elm$html$Html$Attributes$src(user.avatarUrl),
+											$elm$html$Html$Attributes$width(200)
+										]),
+									_List_Nil),
+									A2(
+									$elm$html$Html$div,
+									_List_Nil,
+									_List_fromArray(
+										[
+											function () {
+											var _v1 = user.name;
+											if (_v1.$ === 'Just') {
+												var name = _v1.a;
+												return $elm$html$Html$text(name);
+											} else {
+												return $elm$html$Html$text('No Name');
+											}
+										}()
+										])),
+									A2(
+									$elm$html$Html$div,
+									_List_Nil,
+									_List_fromArray(
+										[
+											function () {
+											var _v2 = user.bio;
+											if (_v2.$ === 'Just') {
+												var bio = _v2.a;
+												return $elm$html$Html$text(bio);
+											} else {
+												return $elm$html$Html$text('');
+											}
+										}()
+										]))
+								]));
+					default:
+						var error = _v0.a;
+						return A2(
+							$elm$html$Html$div,
+							_List_Nil,
+							_List_fromArray(
+								[
+									$elm$html$Html$text(
+									$elm$core$Debug$toString(error))
+								]));
+				}
+			}()
 			]));
 };
-var $author$project$Chapter3$Command$main = $elm$browser$Browser$element(
+var $author$project$Chapter3$Search$main = $elm$browser$Browser$element(
 	{
-		init: $author$project$Chapter3$Command$init,
+		init: $author$project$Chapter3$Search$init,
 		subscriptions: function (_v0) {
 			return $elm$core$Platform$Sub$none;
 		},
-		update: $author$project$Chapter3$Command$update,
-		view: $author$project$Chapter3$Command$view
+		update: $author$project$Chapter3$Search$update,
+		view: $author$project$Chapter3$Search$view
 	});
-_Platform_export({'Chapter3':{'Command':{'init':$author$project$Chapter3$Command$main(
+_Platform_export({'Chapter3':{'Search':{'init':$author$project$Chapter3$Search$main(
 	$elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}}});}(this));
 
-  var app = Elm.Chapter3.Command.init({ node: document.getElementById("elm") });
+  var app = Elm.Chapter3.Search.init({ node: document.getElementById("elm") });
 }
 catch (e)
 {
