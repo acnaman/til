@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>title</title>
+        <script src="elm.js"></script>
+    </head>
+    <body>
+        <div id="elm-node"></div>
+        <script type="text/javascript">
+            const app = Elm.Chapter4.Prac43.init({
+                node: document.getElementById("elm-node")
+            });
+            app.ports.confirm.subscribe(message => {
+                const answer = confirm(message);
+                app.ports.receiveAnswer.send(answer);
+            });
+        </script>
+    </body>
+</html>
