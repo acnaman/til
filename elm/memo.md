@@ -25,3 +25,36 @@ Elmは関数の引数を部分適用できる。
 逆に言うと、3つの引数が必要な関数に対して、1つの引数のみを渡すこともできる。このように複数の引数のうちの一部の引数のみを適用することを**部分適用**という。
 
 部分適用を行うことによって得られる中間の関数を別の関数の引数に渡す、みたいなことも出てくる。混乱してきたら関数の型定義がどうなっているのかをよく見て、関数の構造を理解したほうが良い。
+
+## コマンド
+Elm RuntimeとApplicationの橋渡しを行う
+Cmd Msgは `Msg` 型のメッセージでを送るコマンド的な感じ
+`Browser.application` の場合、コマンドを受け取るとそのコマンドを引数にしたupdate関数を呼んで実行する
+
+```
+> Browser.application
+<function>
+    : { init : flags -> Url.Url -> Browser.Navigation.Key -> ( model, Cmd msg )
+      , onUrlChange : Url.Url -> msg
+      , onUrlRequest : Browser.UrlRequest -> msg
+      , subscriptions : model -> Sub msg
+      , update : msg -> model -> ( model, Cmd msg )
+      , view : model -> Browser.Document msg
+      }
+      -> Program flags model msg
+```
+
+「更新必要なし」の状態を `Cmd.none` で表現できる
+
+```
+> Cmd.none
+<internals> : Cmd msg
+```
+
+## Result
+以下のような形で定義する
+```
+type Result error value
+  = Ok value
+  | Err error
+```
