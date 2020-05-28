@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>Vue.js App</title>
+    <link rel="stylesheet" href="monster.css">
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="(item, index) in items" v-bind:key="item.id" v-bind:class="{tuyoi: item.hp > 300}">
+                ID.{{item.id}} {{item.name}}　HP.{{item.hp}}　<span v-if="item.hp>300">つよい！</span>
+                <button v-on:click="attack(index)">攻撃</button>
+            </li>
+        </ul>
+        <input type="text" v-model="newname" />
+        <button v-on:click="addMonster" v-bind:disabled="newname === ''" >モンスター追加</button>
+        <!-- データを表示するよ -->
+        <pre>{{$data}}</pre>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="monster.js"></script>
+</body>
+</html>
