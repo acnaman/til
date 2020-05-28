@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>Vue.js App</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div id="app">
+        <p>{{message}}</p>
+        <input v-model="message">
+        <p>{{count}}　<transition><span v-if="count < 0">マイナスなっとるよ</span></transition></p>
+        <input v-model.number="count">
+        
+        <ul>
+            <li v-for="item in datalist">{{item}}</li>
+        </ul>
+        <button v-on:click="handleClick">りすとについか</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
