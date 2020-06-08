@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>Vue.js App</title>
+    <link rel="stylesheet" href="cloak.css">
+</head>
+<body>
+    <div id="app" v-cloak>
+        {{message}}
+        <!-- データを表示するよ -->
+        <pre>{{$data}}</pre>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="cloak.js"></script>
+</body>
+</html>
