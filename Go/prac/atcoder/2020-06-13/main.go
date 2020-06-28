@@ -28,14 +28,15 @@ func main() {
 		a2 = tmp
 	}
 
-	for i, v := range a {
-		if i != 0 {
-			fmt.Printf(" %d", v)
-		} else {
-			fmt.Printf("%d", v)
+	/*	for i, v := range a {
+			if i != 0 {
+				fmt.Printf(" %d", v)
+			} else {
+				fmt.Printf("%d", v)
+			}
 		}
-	}
-	fmt.Printf("\n")
+		fmt.Printf("\n")*/
+	fmt.Println(a)
 }
 
 func nextInt() int {
